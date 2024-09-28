@@ -1,0 +1,39 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Population in Australia by State (March 2024)",
+  "width": 600,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/eyutingsern/FIT3179/refs/heads/main/ne_1.topojson",
+    "format": {
+      "type": "topojson",
+      "feature": "ne_10m_admin_1_states_provinces"
+    }
+  },
+  "projection": {"type": "mercator"},
+  "transform": [
+    {
+      "lookup": "properties.name", 
+      "from": {
+        "data": {
+          "url": "https://raw.githubusercontent.com/eyutingsern/FIT3179/refs/heads/main/Annuall_population_change_at_31March_2024.csv"
+        },
+        "key": "States", 
+        "fields": ["Population at 31 March 2024 (000)"] 
+      }
+    }
+  ],
+  "mark": "geoshape",
+  "encoding": {
+    "color": {
+      "field": "Population at 31 March 2024 (000)", 
+      "type": "quantitative",
+      "scale": {"scheme": "reds"}
+    },
+    "tooltip": [
+      {"field": "properties.name", "type": "nominal", "title": "States"},
+      {"field": "Population at 31 March 2024 (000)", "type": "quantitative", "title": "Population (000)"}
+    ]
+  }
+ }
+ 
