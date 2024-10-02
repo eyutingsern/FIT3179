@@ -1,0 +1,105 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "width": 500,
+    "height": 400,
+    "title": "Population Change by State in Australia (2024)",
+    "data": {
+      "url": "https://raw.githubusercontent.com/eyutingsern/FIT3179/refs/heads/main/Annuall_population_change_at_31March_2024.csv"
+    },
+    "params": [
+      {
+        "name": "State_selection",
+        "bind": {
+          "input": "select",
+          "options": [
+            null,
+            "New South Wales",
+            "Victoria",
+            "Queensland",
+            "South Australia",
+            "Western Australia",
+            "Tasmania",
+            "Northern Territory",
+            "ACT"
+          ],
+          "labels": [
+            "Show All",
+            "New South Wales",
+            "Victoria",
+            "Queensland",
+            "South Australia",
+            "Western Australia",
+            "Tasmania",
+            "Northern Territory",
+            "ACT"
+          ],
+          "name": "State Selection: "
+        }
+      }
+    ],
+    "transform": [
+      {
+        "filter": "State_selection == null || datum.States == State_selection"
+      }
+    ],
+    "mark": "circle",
+    "encoding": {
+      "x": {
+        "field": "Population at 31 March 2024 (000)",
+        "type": "quantitative",
+        "title": "Total Population (000)",
+        "axis": {"tickCount": 7},
+        "scale": {"type": "log", "domain": [250, 10000]}
+      },
+      "y": {
+        "field": "Change over previous year (%)",
+        "type": "quantitative",
+        "title": "Population Growth (%)",
+        "axis": {"tickCount": 6}
+      },
+      "color": {
+        "field": "States",
+        "type": "nominal",
+        "scale": {
+          "domain": [
+            "New South Wales",
+            "Victoria",
+            "Queensland",
+            "South Australia",
+            "Western Australia",
+            "Tasmania",
+            "Northern Territory",
+            "ACT"
+          ],
+          "range": [
+            "#e41a1c",
+            "#377eb8",
+            "#4daf4a",
+            "#984ea3",
+            "#ff7f00",
+            "#a6cee3",
+            "#f781bf",
+            "#999999"
+          ]
+        }
+      },
+      "opacity": { "value": 0.8 },
+      "size": {
+        "field": "Change over previous year (000)",
+        "type": "quantitative",
+        "scale": {
+          "type": "threshold",
+          "domain": [2, 50, 100, 150, 200],
+          "range": [30, 70, 100, 150, 200]
+        },
+        "legend": {"format": ".1s", "title": "Change in Population (000)"}
+      },
+      "tooltip": [
+        {"field": "States", "type": "nominal", "title": "State"},
+        {"field": "Population at 31 March 2024 (000)", "type": "quantitative", "format": ",", "title": "Total Population (000)"},
+        {"field": "Change over previous year (%)", "type": "quantitative", "format": ".2f", "title": "Population Growth (%)"},
+        {"field": "Change over previous year (000)", "type": "quantitative", "format": ",", "title": "Change in Population (000)"}
+      ]
+    }
+  }
+  
