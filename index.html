@@ -1,27 +1,54 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!-- Import Vega & Vega-Lite (does not have to be from CDN) -->
+  <!-- Import Vega & Vega-Lite -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
-  
-  <!-- CSS file -->
-  <link rel="stylesheet" type="text/css" href="css/styles.css" media="all">
 
+  <!-- CSS for Grid Layout -->
+  <style>
+    /* Grid container for two-column layout */
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Two equal-width columns */
+      gap: 10px; /* Space between the columns */
+      margin-top: 20px;
+    }
+
+    /* Ensure each column takes full width of the grid cell */
+    #choropleth_map, #scatterplot {
+      width: 100%; 
+      height: 500px; /* Adjust height as needed */
+    }
+
+    /* Optional: Add padding or margins to ensure balanced spacing */
+    .column {
+      padding: 10px;
+    }
+  </style>
 
 </head>
 <body>
   
-<div id="choropleth_map"></div>
+  <div class="container">
+    <div class="column" id="choropleth_map"></div>
+    <div class="column" id="scatterplot"></div>
+  </div>
 
-<script type="text/javascript">
+  <script type="text/javascript">
+    // Embed Choropleth Map
+    var spec1 = "population.json";
+    vegaEmbed('#choropleth_map', spec1).then(function(result) {
+      // Access the Vega view instance for the choropleth map
+    }).catch(console.error);
 
-  var spec2 = "https://raw.githubusercontent.com/eyutingsern/FIT3179/refs/heads/main/population.json";
-  vegaEmbed('#choropleth_map', spec2).then(function(result) {
-    // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
-  }).catch(console.error);
-</script>
+    // Embed Scatterplot
+    var spec2 = "scatterplot.json";
+    vegaEmbed('#scatterplot', spec2).then(function(result) {
+      // Access the Vega view instance for the scatterplot
+    }).catch(console.error);
+  </script>
 
 </body>
 </html>
