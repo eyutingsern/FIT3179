@@ -1,0 +1,18 @@
+/* Style for two-column layout */
+.container {
+    display: flex;
+    justify-content: space-around; /* Spreads the two columns evenly */
+    gap: 20px; /* Adds space between the columns */
+    margin-top: 20px;
+  }
+  
+  .column {
+    flex: 1; /* Each column takes up equal space */
+    min-width: 300px; /* Minimum width to prevent shrinking too much */
+  }
+  
+  #choropleth_map, #scatterplot {
+    width: 100%; /* Makes sure the visualisation fits the column width */
+    height: 400px; /* Adjust height as needed */
+  }
+  
