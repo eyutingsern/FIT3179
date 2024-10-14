@@ -28,7 +28,7 @@
       </div>
     </div>
   
-  <!-- First Section: Choropleth Map with Checkboxes -->
+  <!-- Choropleth Map -->
   <div class="flex-container">
     <div class="text-box">
       <h2>Population Overview</h2>
@@ -46,12 +46,12 @@
     <div class="visualization" id="choropleth_map"></div>
   </div>
 
-  <!-- Checkbox Filter Container -->
+  <!-- Checkbox Filter -->
 <div class="filter-title-container">
   <h2>Select States to Highlight (map and pie chart)</h2>
 </div>
 
-<!-- Container for the Checkboxes -->
+<!-- Container for checkboxes -->
 <div class="checkbox-container">
   <label><input type="checkbox" value="New South Wales" class="state-filter" checked> New South Wales</label>
   <label><input type="checkbox" value="Victoria" class="state-filter" checked> Victoria</label>
@@ -63,7 +63,7 @@
   <label><input type="checkbox" value="Australian Capital Territory" class="state-filter" checked> Australian Capital Territory</label>
 </div>
 
-  <!-- Second Section: Pie Chart -->
+  <!-- Pie Chart -->
   <div class="flex-container">
     <div class="visualization" id="pie_chart"></div>
     <div class="text-box">
@@ -82,7 +82,7 @@
     </div>
   </div>
 
-  <!-- Third Section: Line Graph -->
+  <!-- Line Graph -->
   <div class="flex-container">
     <div class="text-box">
       <h2>Estimated Resident Population by Country of Birth</h2>
@@ -100,7 +100,7 @@
     <div class="visualization" id="line_graph"></div>
   </div>
 
-  <!-- Fourth Section: Stacked Bar Chart -->
+  <!-- Stacked Bar Chart -->
   <div class="flex-container">
     <div class="visualization" id="stacked_chart"></div>
     <div class="text-box">
@@ -120,13 +120,13 @@
   <script type="text/javascript">
   const checkboxes = document.querySelectorAll(".state-filter");
 
-// Function to update the map based on selected states
+
 const updateVisualizations = () => {
   const selectedStates = Array.from(checkboxes)
     .filter(checkbox => checkbox.checked)
     .map(checkbox => checkbox.value);
 
-  // Update Choropleth Map
+  
   const choroplethSpec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Population in Australia by State (March 2024)",
@@ -199,7 +199,7 @@ const updateVisualizations = () => {
 
   vegaEmbed("#choropleth_map", choroplethSpec).catch(console.error);
 
-  // Update Pie Chart
+  
   const pieChartSpec = {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "data": {
@@ -255,12 +255,11 @@ const updateVisualizations = () => {
   vegaEmbed("#pie_chart", pieChartSpec).catch(console.error);
 };
 
-// Add event listeners to checkboxes
 checkboxes.forEach(checkbox => {
   checkbox.addEventListener("change", updateVisualizations);
 });
 
-// Initial render of the visualizations
+
 updateVisualizations();
 
     vegaEmbed("#line_graph", "line.json").catch(console.error);
