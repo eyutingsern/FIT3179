@@ -1,34 +1,287 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!-- Import Vega & Vega-Lite -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.22.1"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.5.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.21.0"></script>
 
-  <!-- Link to External CSS -->
   <link rel="stylesheet" type="text/css" href="styles.css">
+  <title>Analyzing Population Trends and Growth in Australia (2024)</title>
 </head>
 <body>
+
+  <!-- Title Container -->
+  <div class="title-container">
+    <h1 class="main-title">Analysing Population Trends and Growth in Australia (2024)</h1>
+    <p class="subtitle">A comprehensive story about population changes across Australian states and categories.</p>
+  </div>
+
+    <!-- Introduction Section -->
+    <div class="flex-container">
+      <div class="text-box">
+        <h2 class="section-title">Introduction</h2>
+        <p>
+          This report provides a detailed exploration of <b>population trends</b> across Australia's states and territories in <b>2024</b>. 
+          Understanding the factors contributing to population growth is essential for designing policies that address the needs of communities 
+          and infrastructure.
+        </p>
+      </div>
+    </div>
   
-  <div class="container">
-    <div class="column" id="choropleth_map"></div>
-    <div class="column" id="scatterplot"></div>
+  <!-- First Section: Choropleth Map with Checkboxes -->
+  <div class="flex-container">
+    <div class="text-box">
+      <h2>Population Overview</h2>
+      <p>
+        Australia has experienced significant <b>population growth</b> driven by various factors, 
+        including <b>natural increase</b>, <b>interstate migration</b>, and *overseas migration*. 
+        Understanding these trends is essential for planning <b>infrastructure and services</b>.
+      </p>
+      <p>
+        The <b>choropleth map</b> on the right visualizes <b>population changes</b> across Australia’s 
+        states and territories, highlighting regions with the <b>most significant changes</b>. 
+        By hovering over states, we see that <b>New South Wales</b> has the <b>highest population</b> of <b>8,469,600</b>.
+      </p>      
+    </div>
+    <div class="visualization" id="choropleth_map"></div>
+  </div>
+
+  <!-- Checkbox Filter Container -->
+<div class="filter-title-container">
+  <h2>Select States to Highlight (map and pie chart)</h2>
+</div>
+
+<!-- Container for the Checkboxes -->
+<div class="checkbox-container">
+  <label><input type="checkbox" value="New South Wales" class="state-filter" checked> New South Wales</label>
+  <label><input type="checkbox" value="Victoria" class="state-filter" checked> Victoria</label>
+  <label><input type="checkbox" value="Queensland" class="state-filter" checked> Queensland</label>
+  <label><input type="checkbox" value="Western Australia" class="state-filter" checked> Western Australia</label>
+  <label><input type="checkbox" value="South Australia" class="state-filter" checked> South Australia</label>
+  <label><input type="checkbox" value="Tasmania" class="state-filter" checked> Tasmania</label>
+  <label><input type="checkbox" value="Northern Territory" class="state-filter" checked> Northern Territory</label>
+  <label><input type="checkbox" value="Australian Capital Territory" class="state-filter" checked> Australian Capital Territory</label>
+</div>
+
+  <!-- Second Section: Pie Chart -->
+  <div class="flex-container">
+    <div class="visualization" id="pie_chart"></div>
+    <div class="text-box">
+      <h2>Population Distribution by State or Category</h2>
+      <p>
+        This <b>pie chart</b> visualizes the <i>distribution of population</i> across <b>Australian states</b> for <i>2024</i>, 
+        helping us easily identify which areas have the <b>highest</b> or <b>lowest</b> share of the total population. 
+        Larger segments represent states with <b>higher populations</b>, while smaller segments indicate regions with 
+        <i>comparatively lower populations</i>. 
+      </p>
+      <p>
+        It highlights the significance of regions like <b>New South Wales</b> and <b>Victoria</b> in driving 
+        overall growth. <b>Smaller states</b>, such as <b>Tasmania</b> and the <b>Australian Capital Territory</b>, 
+        play a more <i>localized role</i> in population trends and infrastructure demands.
+      </p>      
+    </div>
+  </div>
+
+  <!-- Third Section: Line Graph -->
+  <div class="flex-container">
+    <div class="text-box">
+      <h2>Estimated Resident Population by Country of Birth</h2>
+      <p>
+        This <b>line graph</b> shows changes in the <i>resident population of Australia</i> by <b>country of birth</b> 
+        over the years <b>2013, 2018, and 2023</b>. It reflects Australia’s <b>growing diversity</b>, with notable increases in people born in 
+        <b>India (nearly 150% increase from 2013 to 2023)</b> and <b>China</b>. 
+      </p>
+      <p>
+        The trend indicates how immigration has shaped the demographic landscape, 
+        with these two countries becoming <i>key contributors</i> to Australia’s multicultural society. 
+      </p>
+      
+    </div>
+    <div class="visualization" id="line_graph"></div>
+  </div>
+
+  <!-- Fourth Section: Stacked Bar Chart -->
+  <div class="flex-container">
+    <div class="visualization" id="stacked_chart"></div>
+    <div class="text-box">
+      <h2>Components of Annual Population Growth</h2>
+      <p>
+        The <b>stacked bar chart</b> explores the <b>components of population growth</b> across states, 
+        breaking it down into <b>natural increase</b>, <b>interstate migration</b>, and <b>overseas migration</b>. 
+      </p>
+      <p>
+        States with <i>higher interstate migration</i>, like <b>Queensland (22.98%)</b>, often attract people due to economic opportunities or lifestyle benefits. 
+        On the other hand, states like <b>Victoria</b> benefits from <b>overseas migration (82.49%)</b> reflect Australia’s position as a destination 
+        for global talent and immigrants.
+      </p>      
+    </div>
   </div>
 
   <script type="text/javascript">
-    // Embed Choropleth Map
-    var spec1 = "population.json";
-    vegaEmbed('#choropleth_map', spec1).then(function(result) {
-      // Access the Vega view instance for the choropleth map
-    }).catch(console.error);
+  const checkboxes = document.querySelectorAll(".state-filter");
 
-    // Embed Scatterplot
-    var spec2 = "scatterplot.json";
-    vegaEmbed('#scatterplot', spec2).then(function(result) {
-      // Access the Vega view instance for the scatterplot
-    }).catch(console.error);
+// Function to update the map based on selected states
+const updateVisualizations = () => {
+  const selectedStates = Array.from(checkboxes)
+    .filter(checkbox => checkbox.checked)
+    .map(checkbox => checkbox.value);
+
+  // Update Choropleth Map
+  const choroplethSpec = {
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Population in Australia by State (March 2024)",
+  "width": 600,
+  "height": 400,
+  "layer": [
+    {
+      "data": {"graticule": true},
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#d9d9d9",
+        "strokeWidth": 0.5
+      },
+      "projection": {
+        "type": "mercator",
+        "scale": 550,  
+        "center": [133, -27]  
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/eyutingsern/FIT3179/refs/heads/main/ne_1.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_10m_admin_1_states_provinces"
+        }
+      },
+      "projection": {
+        "type": "mercator",
+        "scale": 850,  
+        "center": [133, -27]  
+      },
+      "transform": [
+        {
+          "lookup": "properties.name",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/eyutingsern/FIT3179/refs/heads/main/Annuall_population_change_at_31March_2024.csv"
+            },
+            "key": "States",
+            "fields": ["Population at 31 March 2024 (000)"]
+          }
+        },
+        {
+          "filter": {
+            "field": "properties.name",
+            "oneOf": selectedStates
+          }
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "black",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "color": {
+          "field": "Population at 31 March 2024 (000)",
+          "type": "quantitative",
+          "scale": {"scheme": "reds"}
+        },
+        "tooltip": [
+          {"field": "properties.name", "type": "nominal", "title": "State"},
+          {"field": "Population at 31 March 2024 (000)", "type": "quantitative", "title": "Population (000)"}
+        ]
+      }
+    }
+  ]
+};
+
+  vegaEmbed("#choropleth_map", choroplethSpec).catch(console.error);
+
+  // Update Pie Chart
+  const pieChartSpec = {
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "url": "https://raw.githubusercontent.com/eyutingsern/FIT3179/refs/heads/main/Annuall_population_change_at_31March_2024.csv",
+      "format": {"type": "csv"}
+    },
+    "transform": [
+      {
+        "filter": {
+          "field": "States",
+          "oneOf": selectedStates
+        }
+      },
+      {
+        "joinaggregate": [{
+          "op": "sum",
+          "field": "Population at 31 March 2024 (000)",
+          "as": "TotalPopulation"
+        }]
+      },
+      {
+        "calculate": "(datum['Population at 31 March 2024 (000)'] / datum.TotalPopulation) * 100",
+        "as": "Percentage"
+      }
+    ],
+    "layer": [
+      {
+        "mark": {"type": "arc", "outerRadius": 180},
+        "encoding": {
+          "theta": {
+            "field": "Population at 31 March 2024 (000)",
+            "type": "quantitative"
+          },
+          "color": {
+            "field": "States",
+            "type": "nominal",
+            "scale": {"scheme": "reds"}
+          },
+          "tooltip": [
+            {"field": "States", "type": "nominal", "title": "State/Category"},
+            {"field": "Population at 31 March 2024 (000)", "type": "quantitative", "format": ","},
+            {"field": "Percentage", "type": "quantitative", "format": ".1f", "title": "Percentage (%)"}
+          ]
+        }
+      }
+    ],
+    "view": {"stroke": null},
+    "title": "Population Distribution by State or Category (2024)",
+    "width": 400,
+    "height": 400
+  };
+
+  vegaEmbed("#pie_chart", pieChartSpec).catch(console.error);
+};
+
+// Add event listeners to checkboxes
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener("change", updateVisualizations);
+});
+
+// Initial render of the visualizations
+updateVisualizations();
+
+    vegaEmbed("#line_graph", "line.json").catch(console.error);
+    vegaEmbed("#stacked_chart", "stacked.json").catch(console.error);
   </script>
+
+<div class="footer-container">
+  <h3>Author</h3>
+  <p>Ting Sern Eyu</p>
+
+  <h3>Data Sources</h3>
+  <p>
+    <a href="https://www.abs.gov.au/statistics/people/population/national-state-and-territory-population/mar-2024" target="_blank">ABS Population</a>
+  </p>
+  <p>
+    <a href="https://www.abs.gov.au/statistics/people/population/overseas-migration/2022-23-financial-year" target="_blank">ABS Migration</a>
+  </p>
+  <p>
+    <a href="https://www.abs.gov.au/statistics/people/population/australias-population-country-birth/jun-2023" target="_blank">ABS Country of Birth</a>
+  </p>
+</div>
 
 </body>
 </html>
