@@ -1,0 +1,94 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "url": "https://raw.githubusercontent.com/eyutingsern/FIT3179/refs/heads/main/Components%20of%20annual%20population%20growth%202%204.csv",
+      "format": {"type": "csv"}
+    },
+    "transform": [
+      {
+        "fold": ["Natural increase", "Net interstate migration", "Net overseas migration"],
+        "as": ["Component", "Value"]
+      },
+      {
+        "calculate": "toNumber(datum.Value)",
+        "as": "NumericValue"
+      },
+      {
+        "joinaggregate": [
+          {
+            "op": "sum",
+            "field": "NumericValue",
+            "as": "Total"
+          }
+        ],
+        "groupby": ["State"]
+      },
+      {
+        "calculate": "datum.Total != 0 ? (datum.NumericValue / datum.Total) * 100 : 0",
+        "as": "Percentage"
+      }
+    ],
+    "vconcat": [
+      {
+        "mark": "bar",
+        "encoding": {
+          "x": {
+            "field": "State",
+            "type": "nominal",
+            "axis": {"labelAngle": -45},
+            "title": "State"
+          },
+          "y": {
+            "field": "Percentage",
+            "type": "quantitative",
+            "title": "Percentage of Population Change",
+            "stack": "normalize"
+          },
+          "color": {
+            "field": "Component",
+            "type": "nominal",
+            "legend": {"title": "Growth Component", "orient": "right"},
+            "scale": {
+                "range": [
+                  "#ffcccc", "#ff9999", "#ff6666", 
+                  "#ff4d4d", "#ff1a1a", "#cc0000", 
+                  "#990000"
+                ]
+              }
+          },
+          "tooltip": [
+            {"field": "State", "type": "nominal", "title": "State"},
+            {"field": "Component", "type": "nominal", "title": "Component"},
+            {"field": "NumericValue", "type": "quantitative", "title": "Value", "format": ","},
+            {"field": "Percentage", "type": "quantitative", "title": "Percentage", "format": ".2f"}
+          ],
+          "opacity": {
+            "condition": {"selection": "state_selection", "value": 1},
+            "value": 0.2
+          }
+        },
+        "selection": {
+          "component_selection": {
+            "type": "multi",
+            "fields": ["Component"],
+            "bind": "legend"
+          },
+          "state_selection": {
+            "type": "single",
+            "fields": ["State"],
+            "bind": {
+              "input": "select",
+              "options": [null, "NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"],
+              "labels": ["All", "NSW", "VIC", "QLD", "SA", "WA", "TAS", "NT", "ACT"], 
+              "name": "State"
+            },
+            "empty": "all"
+          }
+        },
+        "width": 500,
+        "height": 300,
+        "title": "Normalized Components of Annual Population Growth by State (2024)"
+      }
+    ]
+  }
+  
