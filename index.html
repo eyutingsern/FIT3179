@@ -28,7 +28,7 @@
       </div>
     </div>
   
-  <!-- Choropleth Map -->
+  <!--  Choropleth Map  -->
   <div class="flex-container">
     <div class="text-box">
       <h2>Population Overview</h2>
@@ -46,12 +46,11 @@
     <div class="visualization" id="choropleth_map"></div>
   </div>
 
-  <!-- Checkbox Filter -->
+  <!-- Checkbox -->
 <div class="filter-title-container">
   <h2>Select States to Highlight (map and pie chart)</h2>
 </div>
 
-<!-- Container for checkboxes -->
 <div class="checkbox-container">
   <label><input type="checkbox" value="New South Wales" class="state-filter" checked> New South Wales</label>
   <label><input type="checkbox" value="Victoria" class="state-filter" checked> Victoria</label>
@@ -126,7 +125,7 @@ const updateVisualizations = () => {
     .filter(checkbox => checkbox.checked)
     .map(checkbox => checkbox.value);
 
-  
+
   const choroplethSpec = {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Population in Australia by State (March 2024)",
@@ -254,6 +253,7 @@ const updateVisualizations = () => {
 
   vegaEmbed("#pie_chart", pieChartSpec).catch(console.error);
 };
+
 
 checkboxes.forEach(checkbox => {
   checkbox.addEventListener("change", updateVisualizations);
