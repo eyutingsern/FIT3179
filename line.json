@@ -1,37 +1,101 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "data": {
-      "url": "https://raw.githubusercontent.com/eyutingsern/FIT3179/refs/heads/main/Graph%201.3%20Estimated%20resident%20population%20by%20country%20of%20birth(a)(b)%202.csv"
-    },
-    "transform": [
-      {
-        "fold": ["2013 (000)", "2018 (000)", "2023 (000)"],
-        "as": ["Year", "Population"]
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/eyutingsern/FIT3179/refs/heads/main/countryorigin.csv"
+  },
+  "transform": [
+    {
+      "fold": ["2013", "2018", "2023"],
+      "as": ["Year", "Population"]
+    }
+  ],
+  "layer": [
+    {
+      "selection": {
+        "country_filter": {
+          "type": "multi",
+          "fields": ["Country "],  
+          "bind": "legend"
+        }
+      },
+      "mark": {
+        "type": "line",
+        "point": true
+      },
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "ordinal",
+          "title": "Year",
+          "axis": {
+            "labelAngle": 0,
+            "labelFontSize": 12,
+            "titleFontSize": 14
+          }
+        },
+        "y": {
+          "field": "Population",
+          "type": "quantitative",
+          "title": "Population (000)",
+          "scale": {"domain": [0, 1100]},
+          "axis": {
+            "titleFontSize": 14,
+            "labelFontSize": 12
+          }
+        },
+        "color": {
+          "field": "Country ",
+          "type": "nominal",
+          "scale": {
+            "range": [
+              "#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", 
+              "#a6d854", "#ffd92f", "#e5c494", "#b3b3b3", 
+              "#1f78b4", "#33a02c", "#fb9a99"
+            ]},
+          "legend": {
+            "title": "Country of Birth",
+            "titleFontSize": 14,
+            "labelFontSize": 12,
+            "orient": "right"
+          }
+        },
+        "opacity": {
+          "condition": {"selection": "country_filter", "value": 1},
+          "value": 0.2
+        },
+        "tooltip": [
+          {"field": "Country ", "type": "nominal", "title": "Country"},
+          {"field": "Year", "type": "ordinal", "title": "Year"},
+          {"field": "Population", "type": "quantitative", "title": "Population (000)"}
+        ]
       }
-    ],
-    "mark": "line",
-    "encoding": {
-      "x": {
-        "field": "Year",
-        "type": "ordinal",
-        "title": "Year"
-      },
-      "y": {
-        "field": "Population",
-        "type": "quantitative",
-        "title": "Population (000)"
-      },
-      "color": {
-        "field": "Country",
-        "type": "nominal",
-        "legend": {"title": "Country of Birth"}
-      },
-      "tooltip": [
-        {"field": "Country", "type": "nominal", "title": "Country"},
-        {"field": "Year", "type": "ordinal", "title": "Year"},
-        {"field": "Population", "type": "quantitative", "title": "Population (000)"}
-      ]
     },
-    "title": "Estimated Resident Population by Country of Birth (2013–2023)"
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 5,
+        "dy": -5,
+        "fontSize": 12
+      },
+      "transform": [
+        {
+          "filter": "(datum['Country '] == 'Nepal' && datum['Year'] == '2018') || (datum['Country '] != 'Nepal' && datum['Year'] == '2023')"
+        }
+      ],
+      "encoding": {
+        "x": {"field": "Year", "type": "ordinal"},
+        "y": {"field": "Population", "type": "quantitative"},
+        "text": {"field": "Country ", "type": "nominal"},
+        "color": {"field": "Country ", "type": "nominal"}
+      }
+    }
+  ],
+  "title": {
+    "text": "Estimated Resident Population by Country of Birth (2013–2023)",
+    "fontSize": 16,
+    "anchor": "start"
   }
-  
+}
