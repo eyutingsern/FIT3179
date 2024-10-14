@@ -65,7 +65,7 @@ body {
   
   /* Graph box */
   .visualization {
-    display: flex; 
+    flex: 2; 
     height: 500px;
     min-width: 450px;
     border-radius: 12px;
